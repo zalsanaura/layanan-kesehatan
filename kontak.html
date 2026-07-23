@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tugas Web Interaktif JavaScript</title>
+  <!-- Menghubungkan ke file CSS -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- FITUR 1: Menu Navigasi Mobile -->
+  <header>
+    <div class="logo">MyWebsite</div>
+    <div class="hamburger" id="hamburgerBtn">&#9776;</div>
+    <ul class="nav-menu" id="navMenu">
+      <li><a href="#">Beranda</a></li>
+      <li><a href="#">Layanan</a></li>
+      <li><a href="#">Kontak</a></li>
+    </ul>
+  </header>
+
+  <main class="container">
+
+    <!-- FITUR 2: Tombol Tampil / Sembunyikan Konten -->
+    <section class="card">
+      <h2>Fitur 1: Informasi Detail</h2>
+      <p>Klik tombol di bawah untuk melihat rincian informasi selengkapnya.</p>
+      <button id="toggleBtn" class="btn-toggle">Tampilkan Detail</button>
+
+      <div id="moreContent" class="hidden-content">
+        <p>Ini adalah konten tambahan yang berhasil ditampilkan atau disembunyikan menggunakan manipulasi DOM dan event listener pada JavaScript.</p>
+      </div>
+    </section>
+
+    <!-- FITUR 3: Validasi Formulir & Pesan Konfirmasi -->
+    <section class="card">
+      <h2>Fitur 2: Form Pendaftaran</h2>
+      <form id="myForm" novalidate>
+        <div class="form-group">
+          <label for="nama">Nama Lengkap:</label>
+          <input type="text" id="nama" placeholder="Masukkan nama Anda">
+          <small class="error-msg" id="namaError">Nama tidak boleh kosong!</small>
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email:</label>
+          <input type="email" id="email" placeholder="contoh@email.com">
+          <small class="error-msg" id="emailError">Masukkan format email yang valid!</small>
+        </div>
+
+        <button type="submit" class="btn-submit">Kirim Pendaftaran</button>
+      </form>
+
+      <!-- Pesan Konfirmasi Setelah Formulir Dikirim -->
+      <div id="confirmMessage" class="confirm-box">
+        <strong>Sukses!</strong> Formulir berhasil dikirim. Terima kasih telah mendaftar.
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Menghubungkan ke file JavaScript di dalam folder js -->
+  <script src="js/script.js"></script>
+</body>
+</html>
