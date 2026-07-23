@@ -1,77 +1,56 @@
-// ==========================================================
-// FITUR 1: Menu Navigasi Mobile (Event Listener + DOM Toggle)
-// ==========================================================
-const hamburgerBtn = document.getElementById('hamburgerBtn');
-const navMenu = document.getElementById('navMenu');
+document.addEventListener("DOMContentLoaded", () => {
+  // 1. Highlight Menu Navigasi Aktif Otomatis Berdasarkan Halaman
+  const currentPath = window.location.pathname.split("/").pop() || "index.html";
+  const navLinks = document.querySelectorAll(".nav-links a");
 
-hamburgerBtn.addEventListener('click', function() {
-  // Manipulasi DOM: Mengubah (toggle) kelas CSS 'active'
-  navMenu.classList.toggle('active');
-});
+  navLinks.forEach((link) => {
+    const href = link.getAttribute("href");
+    if (href === currentPath) {
+      link.classList.add("active");
+    }
+  });
 
+  // 2. Handling Smooth Scroll untuk Anchor Link
+  document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+    anchor.addEventListener("click", function (e) {
+      const targetId = this.getAttribute("href");
+      if (targetId !== "#") {
+        e.preventDefault();
+        const targetElement = document.querySelector(targetId);
+        if (targetElement) {
+          targetElement.scrollIntoView({
+            behavior: "smooth",
+          });
+        }
+      }
+    });
+  });
 
-// ==========================================================
-// FITUR 2: Tombol Tampil / Sembunyikan Konten (DOM Display)
-// ==========================================================
-const toggleBtn = document.getElementById('toggleBtn');
-const moreContent = document.getElementById('moreContent');
+  // 3. Penanganan Formulir Pendaftaran Kegiatan (Validasi & Notifikasi Moderen)
+  const registrationForm = document.querySelector('form[action="#"]');
+  if (registrationForm) {
+    registrationForm.addEventListener("submit", (e) => {
+      e.preventDefault();
 
-toggleBtn.addEventListener('click', function() {
-  // Cek status tampilan elemen saat ini
-  if (moreContent.style.display === 'none' || moreContent.style.display === '') {
-    // Manipulasi DOM: Tampilkan konten dan ubah teks tombol
-    moreContent.style.display = 'block';
-    toggleBtn.innerText = 'Sembunyikan Detail';
-  } else {
-    // Manipulasi DOM: Sembunyikan konten dan ubah teks tombol
-    moreContent.style.display = 'none';
-    toggleBtn.innerText = 'Tampilkan Detail';
-  }
-});
+      // Ambil nilai input
+      const inputs = registrationForm.querySelectorAll(".form-control");
+      let isValid = true;
 
+      inputs.forEach((input) => {
+        if (input.hasAttribute("required") && !input.value.trim()) {
+          isValid = false;
+          input.style.borderColor = "#ef4444";
+        } else {
+          input.style.borderColor = "var(--border-color)";
+        }
+      });
 
-// ==========================================================
-// FITUR 3: Validasi Form & Pesan Konfirmasi (Form Submit Event)
-// ==========================================================
-const myForm = document.getElementById('myForm');
-const namaInput = document.getElementById('nama');
-const emailInput = document.getElementById('email');
-const namaError = document.getElementById('namaError');
-const emailError = document.getElementById('emailError');
-const confirmMessage = document.getElementById('confirmMessage');
-
-myForm.addEventListener('submit', function(event) {
-  // Mencegah browser melakukan reload halaman otomatis
-  event.preventDefault();
-
-  let isValid = true;
-
-  // 1. Validasi Input Nama
-  if (namaInput.value.trim() === '') {
-    namaError.style.display = 'block';
-    isValid = false;
-  } else {
-    namaError.style.display = 'none';
-  }
-
-  // 2. Validasi Input Email dengan Regex
-  const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
-  if (!emailInput.value.match(emailPattern)) {
-    emailError.style.display = 'block';
-    isValid = false;
-  } else {
-    emailError.style.display = 'none';
-  }
-
-  // 3. Tampilkan pesan konfirmasi jika form valid
-  if (isValid) {
-    // Manipulasi DOM: Menampilkan box pesan konfirmasi
-    confirmMessage.style.display = 'block';
-    
-    // Reset isi form
-    myForm.reset();
-  } else {
-    // Sembunyikan pesan konfirmasi jika ada error
-    confirmMessage.style.display = 'none';
+      if (isValid) {
+        alert("Terima kasih! Pendaftaran kegiatan Anda telah berhasil diproses.");
+        registrationForm.reset();
+      } else {
+        alert("Mohon lengkapi semua kolom formulir yang wajib diisi.");
+      }
+    });
   }
 });
